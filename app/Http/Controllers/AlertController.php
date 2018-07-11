@@ -13,6 +13,8 @@ use App\Subcounty;
 use Illuminate\Support\Facades\Auth;
 use Excel;
 use App\Exports\AlertsExport;
+use App\Mail\AlertEmail;
+use App\User;
 
 class AlertController extends Controller
 {
@@ -48,8 +50,8 @@ class AlertController extends Controller
     return view('alert.index',compact('alerts'));
     }
 
-    public function show(){
-
+    public function show(Alert $alerts){
+       return view('alert.index',compact('alerts'));
     }
 
     public function show_byFacility($facility_id){
@@ -96,11 +98,16 @@ class AlertController extends Controller
       $alert->status = request('status');
       $alert->alert_code = $random_chars;
       if($alert->save()){
+        //return $alert;
+        $user = User::find(1);
+
+        \Mail::to("simbake2009@yahoo.com")->send(new AlertEmail($user,$alert));
+        //session()->flash("info","Alert code $alert->alert_code. An alert has been sent out to users.");
         session()->flash("success","Alert created successfully");
       }else{
         session()->flash("error","An Alert was not created because an error occurred");
       }
-      return redirect('/alert/create');
+      return redirect('/alerts');
 
     }
 

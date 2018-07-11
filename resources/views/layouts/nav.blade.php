@@ -21,14 +21,14 @@
                       {{ Auth::user()->username }} | @if(Auth::user()->county_id !=0) {{ Auth::user()->county->name }} @elseif(Auth::user()->subcounty_id !=0) {{ Auth::user()->subcounty->name }}  @endif{{ Auth::user()->access_level }} <span class="caret"></span>
                   </a>
 
-                  <div class="dropdown-menu" style="float:right" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" style="float:right" href="{{ route('logout') }}"
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="{{ route('logout') }}"
                          onclick="event.preventDefault();
                                        document.getElementById('logout-form').submit();">
                           Logout
                       </a>
 
-                      <form id="logout-form" style="float:right" action="{{ route('logout') }}" method="POST" style="display: none;">
+                      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                           @csrf
                       </form>
                   </div>
