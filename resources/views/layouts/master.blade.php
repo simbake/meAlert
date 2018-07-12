@@ -48,7 +48,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="/js/jquery-3.3.1.min.js" integrity="" crossorigin="anonymous"></script>
-    <script src="js/popper.min.js" integrity="" crossorigin="anonymous"></script>
+    <script src="/js/popper.min.js" integrity="" crossorigin="anonymous"></script>
     <script src="/js/bootstrap.min.js" integrity="" crossorigin="anonymous"></script>
     <script src="/js/jquery.dataTables.min.js"></script>
     <script src="/js/holder.min.js"></script>

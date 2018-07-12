@@ -11,6 +11,8 @@ use App\County;
 use App\Subcounty;
 use App\Exports\ResponsesExport;
 use Carbon\Carbon;
+use App\Mail\KemriEmail;
+use App\User;
 //use Illuminate\Support\Facades\Auth;
 
 class ResponseController extends Controller
@@ -176,6 +178,9 @@ class ResponseController extends Controller
       $kemri->comments = request("comments");
       //$kemri->save();
       if($kemri->save()){
+        $user = User::find(1);
+        $alerts = Alert::find($alert);
+        \Mail::to("simbake2009@yahoo.com")->send(new KemriEmail($user,$alerts,$kemri));
         session()->flash("success","Response created successfully");
       }else{
         session()->flash("error","Response was not created because an error occurred");
