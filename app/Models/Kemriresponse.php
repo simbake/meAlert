@@ -1,16 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Response extends Model
+class Kemriresponse extends Model
 {
     //
     public function alert(){
       return $this->belongsTo(Alert::class);
-    }
-    public function user(){
-      return $this->belongsTo(User::class);
     }
 }
