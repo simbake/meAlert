@@ -4,7 +4,7 @@
 
 <h1>Create an alert</h1>
 <hr>
-<form method="POST" action="/response/store/{{ $alert->id }}">
+<form method="POST" action="{{route('index')}}/response/store/{{ $alert->id }}">
   {{ csrf_field() }}
   <div class="form-group">
     <label for="alert_code"><strong>Alert Code</strong></label>

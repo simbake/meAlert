@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use App\County;
-use App\Subcounty;
+use App\Models\County;
+use App\Models\Subcounty;
 
 class RegisterController extends Controller
 {
@@ -22,6 +22,13 @@ class RegisterController extends Controller
     | provide this functionality without requiring any additional code.
     |
     */
+    public function showRegistrationForm()
+    {
+        $counties=County::all();
+        $subcounties=Subcounty::all();
+        //dd($counties);
+        return view('auth.register',compact('counties','subcounties'));
+    }
 
     use RegistersUsers;
 
@@ -30,7 +37,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -39,7 +46,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        //$this->middleware('auth');
+        $this->middleware('auth');
     }
 
     /**
@@ -68,6 +75,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+       //exit;
          if($data['access_level'] == 'County Administrator'){
           $data['subcounty'] = 0;
          }

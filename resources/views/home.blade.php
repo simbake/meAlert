@@ -17,9 +17,13 @@ width: 100%;
 height: 100%;
 }
   </style>
-<div class="container">
-    <div class="row justify-content-center">
+<div class="container-fluid">
+    <div class="row">
         <div class="col-md-12">
+          <div class="row">
+          <div class="col-md-2"></div>
+
+           <div class="col-md-10">
             <div class="card">
                 <div class="card-header">Map</div>
 
@@ -34,13 +38,15 @@ height: 100%;
                   </div>
                 </div>
             </div>
+          </div></div>
         </div>
     </div>
 </div><br/>
-<hr><br/>
-<div class="container">
+<div class="container-fluid" style="width:83%; float:right;"><hr></hr></div><br/><br/>
+<div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-md-12">
+      <div class="col-md-2"></div>
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">Chart</div>
 
@@ -62,17 +68,17 @@ height: 100%;
 
 @section('js')
 <script src="https://maps.google.com/maps/api/js?key=AIzaSyCLFGxuQi15Sfc3EHJ0qq0uK6FhGED-bwI"></script>
-<script src="/js/gmaps.js"></script>
-<script src="/highcharts/highcharts.js"></script>
-<script src="/highcharts/exporting.js"></script>
-<script src="/highcharts/export-data.js"></script>
+<script src="js/gmaps.js"></script>
+<script src="highcharts/highcharts.js"></script>
+<script src="highcharts/exporting.js"></script>
+<script src="highcharts/export-data.js"></script>
 <script>
 $(document).ready(function () {
     var map = new GMaps({
         div: '#map',
-        lat: -2,
+        lat: 0,
         lng: 38.9062,
-        width: '1000px',
+        width: '100%',
         height: '800px',
         zoom: 6,
         zoomControl: true,
@@ -117,8 +123,88 @@ function load_mapmarkers(map){
       }
 });
 }
+
 function load_chart(){
   Highcharts.chart('container', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'lifetime Alert Analysis'
+    },
+    xAxis: {
+        categories: [
+          <?php $comma = 1; ?>
+          <?php //dd($alerts) ?>
+          @foreach($alerts as $alert)
+          @if($comma == 1)
+          "<?php echo $alert->disease_name ?>",
+          @endif
+          @endforeach
+        ],
+        title: {
+            text: null
+        }
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Alerts'
+        },
+        stackLabels: {
+            enabled: true,
+            style: {
+                fontWeight: 'bold',
+                color: ( // theme
+                    Highcharts.defaultOptions.title.style &&
+                    Highcharts.defaultOptions.title.style.color
+                ) || 'gray',
+                textOutline: 'none'
+            }
+        }
+    },
+    legend: {
+        reversed: false
+    },
+
+    plotOptions: {
+        series: {
+            stacking: 'normal',
+            dataLabels: {
+                enabled: false
+            }
+        }
+    },
+    tooltip: {
+        formatter: function () {
+            return '<b>' + this.x + '</b><br/>' +
+                this.series.name + ': ' + this.y + '<br/>' +
+                'Total: ' + this.point.stackTotal;
+        }
+    },
+    series: [
+
+      <?php foreach($alerts as $alert): ?>
+         {
+        name: "{{ $alert->disease_name }}",
+        data: [
+          <?php $comma = 1; ?>
+
+            @if($comma == 1)
+
+            {{ $alert->Total.','.$alert->total_results }}
+
+            @endif
+
+        ],
+        },
+
+
+        <?php endforeach ?>
+    ]
+});
+
+  /*Highcharts.chart('container', {
     chart: {
         type: 'bar'
     },
@@ -128,19 +214,7 @@ function load_chart(){
     subtitle: {
         text: 'Diseases by alerts'
     },
-    xAxis: {
-        categories: [<?php $comma = 1; ?>
-          @foreach($alerts as $alert)
-          @if($comma == 1)
-          "<?php echo $alert->disease_name; ?>",
 
-          @endif
-          @endforeach
-        ],
-        title: {
-            text: null
-        }
-    },
     yAxis: {
         min: 0,
         title: {
@@ -155,10 +229,8 @@ function load_chart(){
         valueSuffix: ''
     },
     plotOptions: {
-        bar: {
-            dataLabels: {
-                enabled: true
-            }
+        series: {
+            stacking: 'normal'
         }
     },
     legend: {
@@ -175,19 +247,8 @@ function load_chart(){
     credits: {
         enabled: false
     },
-    series: [{
-        name: 'Quantity',
-        data: [
-          <?php $comma = 1; ?>
-            @foreach($alerts as $alert)
-            @if($comma == 1)
-            <?php echo $alert->Total; ?>,
 
-            @endif
-            @endforeach
-        ]
-    }]
-});
+});*/
 }
 </script>
 

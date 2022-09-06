@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Alert;
-use App\Response;
+use App\Models\Alert;
+use App\Models\Response;
 use Illuminate\Support\Facades\Auth;
-use App\Kemriresponse;
-use App\County;
-use App\Subcounty;
+use App\Models\Kemriresponse;
+use App\Models\County;
+use App\Models\Subcounty;
 use App\Exports\ResponsesExport;
 use Carbon\Carbon;
 //use Illuminate\Support\Facades\Auth;

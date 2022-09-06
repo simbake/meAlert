@@ -4,7 +4,7 @@
 
 <h1>Add a Facility</h1>
 <hr>
-<form method="POST" action="/facility/store">
+<form method="POST" action="{{route('index')}}/facility/store">
   {{ csrf_field() }}
   <div class="form-group">
     <label for="facility_name">Facility name: </label>

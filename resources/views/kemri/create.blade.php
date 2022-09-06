@@ -4,7 +4,7 @@
 
 <h1>Create response</h1>
 <hr>
-<form method="POST" action="/kemri/store/{{ $alert->id }}">
+<form method="POST" action="{{route('index')}}/kemri/store/{{ $alert->id }}">
   {{ csrf_field() }}
   <div class="form-group">
     <label for="alert_code"><strong>Alert Code</strong></label>

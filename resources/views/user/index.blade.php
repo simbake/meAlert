@@ -5,12 +5,12 @@
 
 @else
 @if(Auth::user()->access_level == "MOH")
-<a href="/register" class="btn btn-primary">New User</a>
+<a href="{{route('index')}}/register" class="btn btn-primary">New User</a>
 @endif
 @endguest
 <hr><?php $numbers = 1; ?>
 
-<table id='datatable' class="table table-striped table-hover table-bordered table-hover table-responsive" style="width:100%">
+<table id='datatable' class="table table-striped table-hover table-bordered table-hover table-responsive-md" style="width:100%">
 <thead>
   <tr>
     <th>#</th>

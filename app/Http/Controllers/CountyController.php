@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\County;
-use App\Subcounty;
+use App\Models\County;
+use App\Models\Subcounty;
 use Illuminate\Support\Facades\Auth;
 
 class CountyController extends Controller
@@ -43,7 +43,7 @@ class CountyController extends Controller
       ]);
       $county = new County;
       $county->name = request('name');
-      
+
       if($county->save()){
         session()->flash("success","County ".request('name')." created successfully");
       }else{

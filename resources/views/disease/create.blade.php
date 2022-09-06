@@ -4,7 +4,7 @@
 
 <h1>Add a Disease</h1>
 <hr>
-<form method="POST" action="/disease/store">
+<form method="POST" action="{{route('index')}}/disease/store">
   {{ csrf_field() }}
   <div class="form-group">
     <label for="title">Disease name: </label>

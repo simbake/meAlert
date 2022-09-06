@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Subcounty;
-use App\County;
+use App\Models\Subcounty;
+use App\Models\County;
 use Illuminate\Support\Facades\Auth;
 
 class SubcountyController extends Controller

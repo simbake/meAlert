@@ -5,7 +5,7 @@
 
 @else
 @if(Auth::user()->access_level == "MOH" || Auth::user()->access_level == "County Administrator")
-<a href="/subcounty/create" class="btn btn-primary">New Sub-County</a>
+<a href="{{route('index')}}/subcounty/create" class="btn btn-primary">New Sub-County</a>
 @endif
 @endguest
 <hr>

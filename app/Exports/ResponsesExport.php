@@ -5,10 +5,10 @@ use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Illuminate\Support\Facades\Auth;
-use App\Alert;
-use App\County;
-use App\Subcounty;
-use App\Response;
+use App\Models\Alert;
+use App\Models\County;
+use App\Models\Subcounty;
+use App\Models\Response;
 
 class ResponsesExport implements FromView
 {

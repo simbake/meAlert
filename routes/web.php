@@ -10,8 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', 'HomeController@index');
+//protected $namespace='App\\Http\\Controllers';
+Route::get('/', [
+   'as'=>'index',
+  'uses'=>'HomeController@index']);
 Route::get('/access_restricted', 'HomeController@access_restricted');
 Route::get('/home_alerts', 'HomeController@getalerts');
 Route::get('/alerts', 'AlertController@index');
@@ -21,8 +23,9 @@ Route::get('/alerts', 'AlertController@index');
 Route::get('/counties', 'CountyController@index');
 Route::get('/subcounties', 'SubcountyController@index');
 Route::get('/users', 'UserController@index');
+Route::get('/register_userz','Auth\RegisterController@showRegistrationForm');
 Route::get('facility/create', [
-  'as' => 'register',
+  'as' => 'register_facility',
   'uses' => 'FacilityController@create'
 ]);
 Route::get('/responses', 'ResponseController@index');

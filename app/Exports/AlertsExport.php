@@ -5,9 +5,9 @@ use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Illuminate\Support\Facades\Auth;
-use App\Alert;
-use App\County;
-use App\Subcounty;
+use App\Models\Alert;
+use App\Models\County;
+use App\Models\Subcounty;
 
 class AlertsExport implements FromView
 {

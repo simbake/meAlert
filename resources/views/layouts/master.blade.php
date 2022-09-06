@@ -7,21 +7,21 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>MEALERT</title>
+    <title>meALERT</title>
 
     <!-- Bootstrap core CSS -->
-<link rel="stylesheet" href="/css/bootstrap.min.css" integrity="" crossorigin="anonymous">
+<link rel="stylesheet" href="{{route('index')}}/css/bootstrap.min.css" integrity="" crossorigin="anonymous">
     <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
-    <link href="/css/bootstrap-datepicker.min.css" rel="stylesheet">
-    <link href="/css/blog.css" rel="stylesheet">
-    <link href="/css/octicons.css" rel="stylesheet">
-    <link href="/datatables/datatables.min.css" rel="stylesheet">
-    <link href="/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="{{route('index')}}/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link href="{{route('index')}}/css/blog.css" rel="stylesheet">
+    <link href="{{route('index')}}/css/octicons.css" rel="stylesheet">
+    <link href="{{route('index')}}/datatables/datatables.min.css" rel="stylesheet">
+    <link href="{{route('index')}}/css/jquery.dataTables.min.css" rel="stylesheet">
   </head>
 
   <body>
-    <div class="container">
+    <div class="container-fluid">
     @include('layouts.nav')
     </div>
     <div class="container">
@@ -29,32 +29,50 @@
   <!-- /.blog-top -->
 
     </div>
-
-    <main role="main" class="container">
+    <div class="row container-fluid">
+      @if(Route::current()->getName() == 'home' || Route::current()->getName() == 'index')
+      <div class="col-md-10">
+        @else
+        <div class="col-md-12">
+        @endif
+    <main role="main" class="">
       <div class="row">
-        <div class="col-md-10 blog-main">
+        <div class="col-md-12 blog-main">
         @yield('content')<!-- /.blog-main -->
       </div>
       <?php //dd($show_right) ?>
-        @Include('layouts.rightside')<!-- /.blog-sidebar -->
+
+        <!-- /.blog-sidebar -->
       </div><!-- /.row -->
 
     </main><!-- /.container -->
+  </div>
+  <div class="col-md-2">
+    <div class="row" style="">
+      <div class="col-md-12">
+    @if(Route::current()->getName() == 'home' || Route::current()->getName() == 'index')
+      @Include('layouts.rightside')
+    @endif
+    </div>
+    </div>
+  </div>
+  </div>
 
 
+<br/>
 @include('layouts.footer')
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/js/jquery-3.3.1.min.js" integrity="" crossorigin="anonymous"></script>
-    <script src="js/popper.min.js" integrity="" crossorigin="anonymous"></script>
-    <script src="/js/bootstrap.min.js" integrity="" crossorigin="anonymous"></script>
-    <script src="/js/jquery.dataTables.min.js"></script>
-    <script src="/js/holder.min.js"></script>
-    <script src="/js/bootstrap-datepicker.min.js"></script>
-    <script src="/datatables/datatables.min.js"></script>
-    <script src="/js/notify.min.js"></script>
+    <script src="{{route('index')}}/js/jquery-3.3.1.min.js" integrity="" crossorigin="anonymous"></script>
+    <script src="{{route('index')}}/js/popper.min.js" integrity="" crossorigin="anonymous"></script>
+    <script src="{{route('index')}}/js/bootstrap.min.js" integrity="" crossorigin="anonymous"></script>
+    <script src="{{route('index')}}/js/jquery.dataTables.min.js"></script>
+    <script src="{{route('index')}}/js/holder.min.js"></script>
+    <script src="{{route('index')}}/js/bootstrap-datepicker.min.js"></script>
+    <script src="{{route('index')}}/datatables/datatables.min.js"></script>
+    <script src="{{route('index')}}/js/notify.min.js"></script>
     @yield('js')
     <script>
     $(document).ready( function () {

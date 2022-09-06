@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Facility;
+use App\Models\Facility;
 use Carbon\Carbon;
-use App\County;
-use App\Subcounty;
+use App\Models\County;
+use App\Models\Subcounty;
 use Illuminate\Support\Facades\Auth;
 
 class FacilityController extends Controller
@@ -40,6 +40,7 @@ class FacilityController extends Controller
     public function show(){
 
     }
+
     public function create(){
 
       if(Auth::user()->access_level == "MOH"){
@@ -53,6 +54,7 @@ class FacilityController extends Controller
     }
       return view('facility.create',compact('subcounties'));
     }
+
     public function store(){
 
       $this->validate(request(),[

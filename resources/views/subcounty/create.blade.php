@@ -4,7 +4,7 @@
 
 <h1>Add a SubCounty</h1>
 <hr>
-<form method="POST" action="/subcounty/store">
+<form method="POST" action="{{route('index')}}/subcounty/store">
   {{ csrf_field() }}
   <div class="form-group">
 

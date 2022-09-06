@@ -4,17 +4,17 @@
       <a class="text-muted" href="#">Subscribe</a>
     </div>
     <div class="col-4 text-center">
-      <img src="/css/svg/device-mobile.svg" class="img-rounded img-responsive " alt="Responsive image" id="logo" >
-      <a class="blog-header-logo text-dark" href="/">meAlert</a>
+      <img src="{{route('index')}}/css/svg/device-mobile.svg" class="img-rounded img-responsive " alt="Responsive image" id="logo" >
+      <a class="blog-header-logo text-dark" href="{{url('/')}}">meAlert</a>
     </div>
     <div class="col-4 d-flex justify-content-end align-items-center">
-      <a class="text-muted" href="#">
+      <!--<a class="text-muted" href="#">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-3"><circle cx="10.5" cy="10.5" r="7.5"></circle><line x1="21" y1="21" x2="15.8" y2="15.8"></line></svg>
-      </a>
+      </a>-->
       <div class="">
           <!-- Authentication Links -->
           @guest
-          <a class="btn btn-sm btn-outline-secondary" href="{{ route('register') }}">Sign up</a><a class="btn btn-sm btn-outline-secondary" href="{{ route('login') }}">Sign in</a>
+          <!--<a class="btn btn-sm btn-outline-secondary" href="{{ url('/register_userz') }}">Sign up</a>--><a class="btn btn-sm btn-outline-secondary" href="{{ route('login') }}">Sign in</a>
             @else
               <div class="nav-item dropdown">
                   <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -50,18 +50,20 @@
 </header>
 
 <div class="nav-scroller py-1 mb-2" >
+  @auth
   <nav class="nav d-flex justify-content-between" style="float:right">
-    <a class="p-2 text-muted" href="/alerts">Alerts</a>
-    <a class="p-2 text-muted" href="/facilities">Facilities</a>
-    <a class="p-2 text-muted" href="/diseases">Diseases</a>
-    <a class="p-2 text-muted" href="/counties">Counties</a>
-    <a class="p-2 text-muted" href="/subcounties">Sub-Counties</a>
-    <a class="p-2 text-muted" href="/responses">Responses</a>
-    @Guest
-    @else
+    <a class="p-2 text-muted" href="{{url('/alerts')}}">Alerts</a>
+    <a class="p-2 text-muted" href="{{route('index')}}/facilities">Facilities</a>
+    <a class="p-2 text-muted" href="{{route('index')}}/diseases">Diseases</a>
+    <a class="p-2 text-muted" href="{{route('index')}}/counties">Counties</a>
+    <a class="p-2 text-muted" href="{{route('index')}}/subcounties">Sub-Counties</a>
+    <a class="p-2 text-muted" href="{{route('index')}}/responses">Responses</a>
+    @endauth
+
+    @auth
     @if(Auth::user()->access_level == "MOH")
-    <a class="p-2 text-muted" href="/users">Users</a>
+    <a class="p-2 text-muted" href="{{route('index')}}/users">Users</a>
     @endif
-    @endguest
+    @endauth
   </nav>
 </div>

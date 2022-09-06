@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Facility;
-use App\Disease;
-use App\Alert;
+use App\Models\Facility;
+use App\Models\Disease;
+use App\Models\Alert;
 use Carbon\Carbon;
-use App\Response;
-use App\County;
-use App\Subcounty;
+use App\Models\Response;
+use App\Models\County;
+use App\Models\Subcounty;
 use Illuminate\Support\Facades\Auth;
 use Excel;
 use App\Exports\AlertsExport;

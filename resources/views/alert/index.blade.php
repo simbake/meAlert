@@ -1,17 +1,15 @@
 @extends('layouts.master')
 
 @section('content')
-@Guest
-
-@else
+@auth
 @if(Auth::user()->access_level == "MOH" || Auth::user()->access_level == "County Administrator" || Auth::user()->access_level == "Sub-County Administrator")
-<a href="/alert/create" class="btn btn-primary">New Alert</a>
+<a href="{{route('index')}}/alert/create" class="btn btn-primary">New Alert</a>
 @endif
-<a href="/alert/excel" style="float:right" class="btn btn-primary">Export to Excel</a>
-@endguest
+<a href="{{route('index')}}/alert/excel" style="float:right" class="btn btn-primary">Export to Excel</a>
+@endauth
 <hr>
 
-<table class="table table-striped table-hover table-bordered table-hover table-responsive" id='datatable' style="width:100%">
+<table class="table table-striped table-hover table-bordered table-hover table-responsive-md" id='datatable' style="width:100%">
   <thead>
   <tr>
     <th>Alert Code</th>
@@ -45,18 +43,19 @@
     $kemri = $alert->kemri;
       //$kemri_response = Kemriresponse::where("alert_id",$alert->id)->get()
     ?>
-    @if($kemri['alert_id'] == $alert->id)
+    @if($alert->kemri && $alert->kemri->alert_id == $alert->id)
      <td>Response already submitted</td>
     @else
-    <td><a href="/kemri/create/{{ $alert->id }}" class="badge badge-primary">Respond</a></td>
+    <td><a href="{{route('index')}}/kemri/create/{{ $alert->id }}" class="badge badge-primary">Respond</a></td>
     @endif
+
     @else
     @if(Auth::user()->access_level == "MOH" && @$alert->respond->national == NULL)
-     <td><a href="/alert/response/{{ $alert->id }}" class="badge badge-primary">Respond</a></td>
+     <td><a href="{{route('index')}}/alert/response/{{ $alert->id }}" class="badge badge-primary">Respond</a></td>
      @elseif(Auth::user()->access_level == "County Administrator" && @$alert->respond->county == NULL)
-     <td><a href="/alert/response/{{ $alert->id }}" class="badge badge-primary">Respond</a></td>
+     <td><a href="{{route('index')}}/alert/response/{{ $alert->id }}" class="badge badge-primary">Respond</a></td>
      @elseif(Auth::user()->access_level == "Sub-County Administrator" && @$alert->respond->subcounty == NULL)
-     <td><a href="/alert/response/{{ $alert->id }}" class="badge badge-primary">Respond</a></td>
+     <td><a href="{{route('index')}}/alert/response/{{ $alert->id }}" class="badge badge-primary">Respond</a></td>
      @else
      <td>Response already submitted</td>
     @endif

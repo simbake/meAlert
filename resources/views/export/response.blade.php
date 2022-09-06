@@ -28,21 +28,21 @@
     <td>{{ $response->user->name }}</td>
     <td>{{ $response->created_at->toDayDateTimeString() }}</td>
     <td>
-      @if($response->respond->national == NULL)
+      @if(!$response->respond || $response->respond->national == NULL)
         No Response
       @else
       {!! $response->respond->national !!}
       @endif
     </td>
     <td>
-      @if($response->respond->county == NULL)
+      @if(!$response->respond || $response->respond->county == NULL)
         No Response
       @else
         {!! $response->respond->county !!}
       @endif
     </td>
     <td>
-      @if($response->respond->subcounty == NULL)
+      @if(!$response->respond || $response->respond->subcounty == NULL)
         No Response
       @else
         {!! $response->respond->subcounty !!}

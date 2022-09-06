@@ -4,7 +4,7 @@
 @Guest
 
 @else
-<a href="/responses/excel" style="float:right" class="btn btn-primary">Export to Excel</a>
+<a href="{{route('index')}}/responses/excel" style="float:right" class="btn btn-primary">Export to Excel</a>
 @endguest
 <br/><hr>
 <?php $show_right = 0; ?>

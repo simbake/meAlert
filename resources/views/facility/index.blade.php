@@ -5,12 +5,12 @@
 
 @else
 @if(Auth::user()->access_level == "MOH" || Auth::user()->access_level == "County Administrator" || Auth::user()->access_level == "Sub-County Administrator")
-<a href="/facility/create" class="btn btn-primary">New Facility</a>
+<a href="{{route('index')}}/facility/create" class="btn btn-primary">New Facility</a>
 @endif
 @endguest
 <hr>
 
-<table id='datatable' class="table table-striped table-hover table-bordered table-hover table-responsive" style="width:100%">
+<table id='datatable' class="table table-striped table-hover table-bordered table-hover table-responsive-md" style="width:100%">
 <thead>
   <tr>
     <th>#</th>

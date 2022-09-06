@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Alert;
+use App\Models\Alert;
 use DB;
 use Illuminate\Support\Facades\Auth;
-use App\County;
-use App\Facility;
-use App\Disease;
+use App\Models\County;
+use App\Models\Facility;
+use App\Models\Disease;
+use App\Models\Kemriresponse;
 
 class HomeController extends Controller
 {
@@ -29,18 +30,21 @@ class HomeController extends Controller
      */
     public function index()
     {
-      if(Auth::user()){
-       if(Auth::user()->access_level == "MOH" || Auth::user()->access_level == "KEMRI"){
-      $alerts = DB::table('diseases')->join('alerts','alerts.disease_id','=','diseases.id')
+      //if(Auth::user()){
+       /*if(Auth::user()->access_level == "MOH" || Auth::user()->access_level == "KEMRI"){
+      $alerts = DB::table('diseases')->join('alerts','alerts.disease_id','=','diseases.id')->join('count(Kemriresponses) as results_total')
               ->select(DB::raw('diseases.disease_name,count(alerts.id) as Total'))
               ->groupBy('alerts.disease_id','diseases.id')
               ->get();
-            }
-            elseif(Auth::user()->access_level == "County Administrator"){
+            }*/
+            if(Auth::check()){
+
+            if(Auth::user()->access_level == "County Administrator"){
               $alerts = DB::table("facilities")
                         ->join('alerts','alerts.facility_id','=','facilities.id')
                         ->join('diseases','alerts.disease_id','=','diseases.id')
-                        ->select(DB::raw('diseases.disease_name,count(alerts.id) as Total'))
+                        ->leftJoin('Kemriresponses','Kemriresponses.alert_id','=','alerts.id')
+                        ->select(DB::raw('diseases.disease_name,count(alerts.id) as Total,count(Kemriresponses.alert_id) as total_results'))
                         ->where('facilities.county_id', '=', Auth::user()->county_id)
                         ->groupBy('alerts.disease_id','diseases.id')
                         ->get();
@@ -50,24 +54,39 @@ class HomeController extends Controller
               $alerts = DB::table("facilities")
                         ->join('alerts','alerts.facility_id','=','facilities.id')
                         ->join('diseases','alerts.disease_id','=','diseases.id')
-                        ->select(DB::raw('diseases.disease_name,count(alerts.id) as Total'))
+                        ->leftJoin('Kemriresponses','Kemriresponses.alert_id','=','alerts.id')
+                        ->select(DB::raw('diseases.disease_name,count(alerts.id) as Total, count(Kemriresponses.alert_id) as total_results'))
                         ->where('facilities.subcounty_id', '=', Auth::user()->subcounty_id)
                         ->groupBy('alerts.disease_id','diseases.id')
                         ->get();
             }
-          }else{
+          else{
 
             $alerts = DB::table('diseases')->join('alerts','alerts.disease_id','=','diseases.id')
-                    ->select(DB::raw('diseases.disease_name,count(alerts.id) as Total'))
-                    ->groupBy('alerts.disease_id','diseases.id')
+                    ->select(DB::raw('diseases.disease_name,count(alerts.id) as Total,count(Kemriresponses.alert_id) as total_results'))
+                    ->groupBy('alerts.disease_id','diseases.id')->leftJoin('Kemriresponses','Kemriresponses.alert_id','=','alerts.id')
                     ->get();
 
+
+                    //$alerts = Alert::->get();
+                  //  $alerts = Disease::get()->unique('disease_name');
+                    //dd($alerts->toArray());
+
           }
+        }
+        else{
+          $alerts = DB::table('diseases')->join('alerts','alerts.disease_id','=','diseases.id')
+                  ->select(DB::raw('diseases.disease_name,count(alerts.id) as Total,count(Kemriresponses.alert_id) as total_results'))
+                  ->groupBy('alerts.disease_id','diseases.id')->leftJoin('Kemriresponses','Kemriresponses.alert_id','=','alerts.id')
+                  ->get();
+        }
         return view('home',compact("alerts"));
     }
+
     public function access_restricted(){
       return view("access_restricted");
     }
+
     public function getalerts(){
       if(Auth::user()){
        if(Auth::user()->access_level == "MOH" || Auth::user()->access_level == "KEMRI"){
