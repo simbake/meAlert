@@ -10,4 +10,7 @@ class Kemriresponse extends Model
     public function alert(){
       return $this->belongsTo(Alert::class);
     }
+    public function disease(){
+      return $this->alert->disease();
+    }
 }

@@ -132,16 +132,9 @@ function load_chart(){
     title: {
         text: 'lifetime Alert Analysis'
     },
-    xAxis: {
-        categories: [
-          <?php $comma = 1; ?>
-          <?php //dd($alerts) ?>
-          @foreach($alerts as $alert)
-          @if($comma == 1)
-          "<?php echo $alert->disease_name ?>",
-          @endif
-          @endforeach
-        ],
+    //
+   xAxis: {
+        categories:[<?php echo '"'.implode('","', $diseasez).'"' ?>],
         title: {
             text: null
         }
@@ -151,7 +144,7 @@ function load_chart(){
         title: {
             text: 'Alerts'
         },
-        stackLabels: {
+        /*stackLabels: {
             enabled: true,
             style: {
                 fontWeight: 'bold',
@@ -161,14 +154,14 @@ function load_chart(){
                 ) || 'gray',
                 textOutline: 'none'
             }
-        }
+        }*/
     },
     legend: {
         reversed: false
     },
 
     plotOptions: {
-        series: {
+        column: {
             stacking: 'normal',
             dataLabels: {
                 enabled: false
@@ -176,79 +169,29 @@ function load_chart(){
         }
     },
     tooltip: {
-        formatter: function () {
-            return '<b>' + this.x + '</b><br/>' +
-                this.series.name + ': ' + this.y + '<br/>' +
-                'Total: ' + this.point.stackTotal;
-        }
+
     },
     series: [
-
-      <?php foreach($alerts as $alert): ?>
-         {
-        name: "{{ $alert->disease_name }}",
-        data: [
-          <?php $comma = 1; ?>
-
-            @if($comma == 1)
-
-            {{ $alert->Total.','.$alert->total_results }}
-
-            @endif
-
-        ],
-        },
-
-
-        <?php endforeach ?>
-    ]
+      {
+        <?php //dd($Positive); ?>
+        data:[{!!implode(",",$Total_disease)!!}],
+        name:"Total Alerts"
+      },
+      {
+      <?php //dd($Positive); ?>
+      data:[{!!implode(",",$Positive)!!}],
+      name:"Positive"
+    },{
+      data:[{!!implode(",",$Negative)!!}],
+      name:"Negative"
+    },{
+      data:[{!!implode(",",$Undetermined)!!}],
+      name:"Indeterminate"
+    },{
+      data:[{!!implode(",",$Not_done)!!}],
+      name:"Not Done"
+    }]
 });
-
-  /*Highcharts.chart('container', {
-    chart: {
-        type: 'bar'
-    },
-    title: {
-        text: 'lifetime Alert Analysis'
-    },
-    subtitle: {
-        text: 'Diseases by alerts'
-    },
-
-    yAxis: {
-        min: 0,
-        title: {
-            text: 'Alerts',
-            align: 'high'
-        },
-        labels: {
-            overflow: 'justify'
-        }
-    },
-    tooltip: {
-        valueSuffix: ''
-    },
-    plotOptions: {
-        series: {
-            stacking: 'normal'
-        }
-    },
-    legend: {
-        layout: 'vertical',
-        align: 'right',
-        verticalAlign: 'top',
-        x: 0,
-        y: 25,
-        floating: true,
-        borderWidth: 1,
-        backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
-        shadow: true
-    },
-    credits: {
-        enabled: false
-    },
-
-});*/
 }
 </script>
 

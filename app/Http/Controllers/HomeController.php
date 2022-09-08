@@ -30,13 +30,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-      //if(Auth::user()){
-       /*if(Auth::user()->access_level == "MOH" || Auth::user()->access_level == "KEMRI"){
-      $alerts = DB::table('diseases')->join('alerts','alerts.disease_id','=','diseases.id')->join('count(Kemriresponses) as results_total')
-              ->select(DB::raw('diseases.disease_name,count(alerts.id) as Total'))
-              ->groupBy('alerts.disease_id','diseases.id')
-              ->get();
-            }*/
             if(Auth::check()){
 
             if(Auth::user()->access_level == "County Administrator"){
@@ -61,26 +54,19 @@ class HomeController extends Controller
                         ->get();
             }
           else{
-
-            $alerts = DB::table('diseases')->join('alerts','alerts.disease_id','=','diseases.id')
-                    ->select(DB::raw('diseases.disease_name,count(alerts.id) as Total,count(Kemriresponses.alert_id) as total_results'))
-                    ->groupBy('alerts.disease_id','diseases.id')->leftJoin('Kemriresponses','Kemriresponses.alert_id','=','alerts.id')
-                    ->get();
-
-
-                    //$alerts = Alert::->get();
-                  //  $alerts = Disease::get()->unique('disease_name');
-                    //dd($alerts->toArray());
-
+            //HomeController::charts_all_data();
+          $dataz=$this->charts_all_data();
           }
+
         }
         else{
-          $alerts = DB::table('diseases')->join('alerts','alerts.disease_id','=','diseases.id')
-                  ->select(DB::raw('diseases.disease_name,count(alerts.id) as Total,count(Kemriresponses.alert_id) as total_results'))
-                  ->groupBy('alerts.disease_id','diseases.id')->leftJoin('Kemriresponses','Kemriresponses.alert_id','=','alerts.id')
-                  ->get();
+
+        $dataz=$this->charts_all_data();
+
         }
-        return view('home',compact("alerts"));
+
+        //return view('home',compact("alerts","diseasez","Positive","Negative","Undetermined","Not_done"));
+        return view("home",$dataz);
     }
 
     public function access_restricted(){
@@ -120,5 +106,53 @@ class HomeController extends Controller
               ->get();
       }
       return $alerts;
+    }
+
+    public static function charts_all_data(){
+      $alerts = Disease::get();
+      $Positive=$Negative=$Undetermined=$Not_done= array();
+      $count=0;
+
+      foreach($alerts as $alertz){
+        $Total_disease[$count]=$alertz->alerts->count();
+        $diseasez[$count]=$alertz->disease_name;
+
+      foreach($alertz->kemri as $alert):
+      @$Positive[$count]=$Positive[$count]+0;
+      @$Negative[$count]=$Negative[$count]+0;
+      @$Undetermined[$count]=$Undetermined[$count]+0;
+      @$Not_done[$count]=$Not_done[$count]+0;
+
+      if(isset($alert->specimen_results)){
+
+      if($alert->specimen_results == "Positive"){
+      @$Positive[$count]=$Positive[$count]+1;
+
+      }
+      if($alert->specimen_results == "Negative"){
+      @$Negative[$count]=$Negative[$count]+1;
+
+      }
+
+      if($alert->specimen_results == "Indeterminate"){
+        @$Undetermined[$count]=$Undetermined[$count]+1;
+
+        }
+
+
+        if($alert->specimen_results == "Not Done"){
+          @$Not_done[$count]=$Not_done[$count]+1;
+
+          }
+
+
+      }else{
+      dd("this");
+      }
+      endforeach;
+
+      $count=$count+1;
+      }
+      return compact("alerts","Total_disease","diseasez","Positive","Negative","Undetermined","Not_done");
     }
 }

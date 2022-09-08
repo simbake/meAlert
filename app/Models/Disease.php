@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Disease extends Model
 {
     //
+    use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
     public function alerts()
 {
 
@@ -15,7 +16,8 @@ class Disease extends Model
 
 
 }
-/*public function kemri(){
-  return $this->hasManyThrough(Alert::class,Kemriresponse::class);
-}*/
+public function kemri()
+{
+  return $this->hasManyDeepFromRelations($this->alerts(),(new Alert())->kemri());
+}
 }
