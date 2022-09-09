@@ -34,6 +34,7 @@ Route::get('/responses/excel', 'ResponseController@excel');
 Route::get('/facility_alerts/{facility_id}', 'AlertController@show_byFacility');
 
 Route::get('/disease/create', 'DiseaseController@create');
+Route::get('/alerts/{alerts}', 'AlertController@show');
 Route::get('/alert/create', 'AlertController@create');
 Route::get('/alert/excel', 'AlertController@excel');
 Route::get('/alert/response/{alert}', 'ResponseController@response');
