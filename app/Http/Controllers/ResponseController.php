@@ -12,7 +12,7 @@ use App\Models\Subcounty;
 use App\Exports\ResponsesExport;
 use Carbon\Carbon;
 use App\Mail\KemriEmail;
-use App\User;
+use App\Models\User;
 //use Illuminate\Support\Facades\Auth;
 
 class ResponseController extends Controller
@@ -180,7 +180,7 @@ class ResponseController extends Controller
       if($kemri->save()){
         $user = User::find(1);
         $alerts = Alert::find($alert);
-        \Mail::to("simbake2009@yahoo.com")->send(new KemriEmail($user,$alerts,$kemri));
+        //\Mail::to("simbake2009@yahoo.com")->send(new KemriEmail($user,$alerts,$kemri));
         session()->flash("success","Response created successfully");
       }else{
         session()->flash("error","Response was not created because an error occurred");

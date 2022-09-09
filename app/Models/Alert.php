@@ -11,7 +11,7 @@ class Alert extends Model
   return $this->belongsTo(Facility::class);
 }
 public function disease(){
-  return $this->belongsTo(Disease::class);
+  return $this->hasOne(Disease::class);
 }
 public function user(){
   return $this->belongsTo(User::class);

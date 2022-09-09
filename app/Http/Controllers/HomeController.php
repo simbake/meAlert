@@ -33,35 +33,25 @@ class HomeController extends Controller
             if(Auth::check()){
 
             if(Auth::user()->access_level == "County Administrator"){
-              $alerts = DB::table("facilities")
-                        ->join('alerts','alerts.facility_id','=','facilities.id')
-                        ->join('diseases','alerts.disease_id','=','diseases.id')
-                        ->leftJoin('Kemriresponses','Kemriresponses.alert_id','=','alerts.id')
-                        ->select(DB::raw('diseases.disease_name,count(alerts.id) as Total,count(Kemriresponses.alert_id) as total_results'))
-                        ->where('facilities.county_id', '=', Auth::user()->county_id)
-                        ->groupBy('alerts.disease_id','diseases.id')
-                        ->get();
+
+              $county = Auth::user()->county_id;
+                $dataz=$this->charts_all_data(Disease::with(['facility', 'alerts'])->whereHas('facility', function($q) use($county) { $q->where('county_id', '=', $county); })->get());
 
             }
             elseif(Auth::user()->access_level == "Sub-County Administrator"){
-              $alerts = DB::table("facilities")
-                        ->join('alerts','alerts.facility_id','=','facilities.id')
-                        ->join('diseases','alerts.disease_id','=','diseases.id')
-                        ->leftJoin('Kemriresponses','Kemriresponses.alert_id','=','alerts.id')
-                        ->select(DB::raw('diseases.disease_name,count(alerts.id) as Total, count(Kemriresponses.alert_id) as total_results'))
-                        ->where('facilities.subcounty_id', '=', Auth::user()->subcounty_id)
-                        ->groupBy('alerts.disease_id','diseases.id')
-                        ->get();
+              $subcounty = Auth::user()->subcounty_id;
+              //dd($subcounty);
+                $dataz=$this->charts_all_data(Disease::with(['alerts', 'facility'])->whereHas('facility', function($q) use($subcounty) { $q->where('subcounty_id', '=', $subcounty); })->get());
             }
           else{
-            //HomeController::charts_all_data();
-          $dataz=$this->charts_all_data();
+
+          $dataz=$this->charts_all_data(Disease::get());
           }
 
         }
         else{
 
-        $dataz=$this->charts_all_data();
+        $dataz=$this->charts_all_data(Disease::get());
 
         }
 
@@ -82,6 +72,7 @@ class HomeController extends Controller
                  ->get();
        }
        elseif(Auth::user()->access_level == "County Administrator"){
+
            //$alerts = Facility::with("alerts")->where("county_id",Auth::user()->county_id)->get();
          $alerts = DB::table('alerts')->join('facilities','alerts.facility_id','=','facilities.id')
                  ->select(DB::raw('facilities.facility_name,facilities.latitude,facilities.longitude,alerts.facility_id,count(alerts.id) as Total'))
@@ -108,13 +99,15 @@ class HomeController extends Controller
       return $alerts;
     }
 
-    public static function charts_all_data(){
-      $alerts = Disease::get();
-      $Positive=$Negative=$Undetermined=$Not_done= array();
+    private static function charts_all_data($alerts){
+      //$alerts = Disease::get();
+      $Positive=$Total_disease=$diseasez=$Negative=$Undetermined=$Not_done= array();
+      //dd($alerts);
       $count=0;
 
       foreach($alerts as $alertz){
         $Total_disease[$count]=$alertz->alerts->count();
+        //dd($Total_disease);
         $diseasez[$count]=$alertz->disease_name;
 
       foreach($alertz->kemri as $alert):
@@ -151,8 +144,13 @@ class HomeController extends Controller
       }
       endforeach;
 
-      $count=$count+1;
+      $count++;
       }
       return compact("alerts","Total_disease","diseasez","Positive","Negative","Undetermined","Not_done");
     }
+
+  //  private static function charts_all_data_by_county(){
+
+
+
 }

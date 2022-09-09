@@ -20,4 +20,9 @@ public function kemri()
 {
   return $this->hasManyDeepFromRelations($this->alerts(),(new Alert())->kemri());
 }
+public function facility(){
+
+  return $this->hasManyDeepFromRelations($this->alerts(),(new Alert())->facility());
+  
+}
 }

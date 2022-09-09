@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Excel;
 use App\Exports\AlertsExport;
 use App\Mail\AlertEmail;
-use App\User;
+use App\Models\User;
 
 class AlertController extends Controller
 {
@@ -101,7 +101,7 @@ class AlertController extends Controller
         //return $alert;
         $user = User::find(1);
 
-        \Mail::to("simbake2009@yahoo.com")->send(new AlertEmail($user,$alert));
+        //\Mail::to("simbake2009@yahoo.com")->send(new AlertEmail($user,$alert));
         //session()->flash("info","Alert code $alert->alert_code. An alert has been sent out to users.");
         session()->flash("success","Alert created successfully");
       }else{

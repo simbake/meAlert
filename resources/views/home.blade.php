@@ -17,7 +17,7 @@ width: 100%;
 height: 100%;
 }
   </style>
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <div class="col-md-12">
           <div class="row">
@@ -37,13 +37,13 @@ height: 100%;
                     <div id="map"></div>
                   </div>
                 </div>
-            </div>
+            </div><hr></hr>
           </div></div>
         </div>
     </div>
-</div><br/>
-<div class="container-fluid" style="width:83%; float:right;"><hr></hr></div><br/><br/>
-<div class="container-fluid">
+</div>
+<div class="container"></div>
+<div class="container">
     <div class="row justify-content-center">
       <div class="col-md-2"></div>
         <div class="col-md-10">
@@ -76,7 +76,7 @@ height: 100%;
 $(document).ready(function () {
     var map = new GMaps({
         div: '#map',
-        lat: 0,
+        lat: -2,
         lng: 38.9062,
         width: '100%',
         height: '800px',
@@ -144,30 +144,19 @@ function load_chart(){
         title: {
             text: 'Alerts'
         },
-        /*stackLabels: {
-            enabled: true,
-            style: {
-                fontWeight: 'bold',
-                color: ( // theme
-                    Highcharts.defaultOptions.title.style &&
-                    Highcharts.defaultOptions.title.style.color
-                ) || 'gray',
-                textOutline: 'none'
-            }
-        }*/
     },
     legend: {
         reversed: false
     },
 
-    plotOptions: {
+    /*plotOptions: {
         column: {
             stacking: 'normal',
             dataLabels: {
                 enabled: false
             }
         }
-    },
+    },*/
     tooltip: {
 
     },
