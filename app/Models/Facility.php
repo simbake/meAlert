@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Facility extends Model
 {
     //
+    use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
     public function alerts()
 {
   return $this->hasMany(Alert::class);
@@ -17,9 +18,9 @@ public function subcounty(){
 public function county(){
   return $this->belongsTo(County::class);
 }
-public function disease(){
+public function diseases(){
 
-  return $this->hasManyDeepFromRelations($this->alerts(),(new Disease())->facility());
+  return $this->hasManyDeepFromRelations($this->alerts(),(new Alert())->disease());
 }
 
 }

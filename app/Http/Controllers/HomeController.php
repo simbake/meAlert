@@ -36,20 +36,26 @@ class HomeController extends Controller
             if(Auth::user()->access_level == "County Administrator"){
 
               $county = Auth::user()->county_id;
-                $dataz=$this->charts_all_data(Disease::with(['facility', 'alerts'])->whereHas('facility', function($q) use($county) { $q->where('county_id', '=', $county); })->get());
+                $dataz=$this->charts_all_data(Disease::whereHas('facility', function (Builder $query) use($county) {
+                $query->where('county_id', '=', $county);
+                })->with(['alerts' => function($q) use ($county) {
+                $q->whereHas('facility', function (Builder $n) use($county) {
+                $n->where('county_id', $county);
+                });
+                }])->get());
 
             }
             elseif(Auth::user()->access_level == "Sub-County Administrator"){
               $subcounty = Auth::user()->subcounty_id;
-              //dd($subcounty);
-              /*whereHas('books', function (Builder $query) {
- $query->where('title', 'like', 'PHP%');
-}*/
-                //$dataz=$this->charts_all_data(Disease::with("facility")->whereHas('facility', function($q) use($subcounty) { $q->where('subcounty_id', '=', $subcounty); })->get());
- $dataz=$this->charts_all_data(Disease::whereHas('facility', function (Builder $query) use($subcounty) {
-$query->where('subcounty_id', '=', "$subcounty");
-})->get());
-              dd($dataz);
+
+$dataz=$this->charts_all_data(Disease::whereHas('facility', function (Builder $query) use($subcounty) {
+$query->where('subcounty_id', '=', $subcounty);
+})->with(['alerts' => function($q) use ($subcounty) {
+$q->whereHas('facility', function (Builder $n) use($subcounty) {
+$n->where('subcounty_id', $subcounty);
+});
+}])->get());
+              //dd();
             }
           else{
 
@@ -109,17 +115,20 @@ $query->where('subcounty_id', '=', "$subcounty");
 
     private static function charts_all_data($alerts){
       //$alerts = Disease::get();
-    //  $Total_disease[$count]=$alertz->alerts->count();
+
       $Positive=$Total_disease=$diseasez=$Negative=$Undetermined=$Not_done= array();
       //dd($alerts);
       $count=0;
 
       foreach($alerts as $alertz){
+        $Total_disease[$count]=0;
         $Total_disease[$count]=$alertz->alerts->count();
+
+      //  dd($Total_disease);
         //dd($Total_disease);
         $diseasez[$count]=$alertz->disease_name;
 
-      foreach($alertz->kemri as $alert):
+      foreach($alertz->kemri as $alert){
       @$Positive[$count]=$Positive[$count]+0;
       @$Negative[$count]=$Negative[$count]+0;
       @$Undetermined[$count]=$Undetermined[$count]+0;
@@ -151,7 +160,7 @@ $query->where('subcounty_id', '=', "$subcounty");
       }else{
       dd("this");
       }
-      endforeach;
+    }
 
       $count++;
       }
