@@ -10,6 +10,7 @@ use App\Models\County;
 use App\Models\Facility;
 use App\Models\Disease;
 use App\Models\Kemriresponse;
+use Illuminate\Database\Eloquent\Builder;
 
 class HomeController extends Controller
 {
@@ -41,7 +42,14 @@ class HomeController extends Controller
             elseif(Auth::user()->access_level == "Sub-County Administrator"){
               $subcounty = Auth::user()->subcounty_id;
               //dd($subcounty);
-                $dataz=$this->charts_all_data(Disease::with(['alerts', 'facility'])->whereHas('facility', function($q) use($subcounty) { $q->where('subcounty_id', '=', $subcounty); })->get());
+              /*whereHas('books', function (Builder $query) {
+ $query->where('title', 'like', 'PHP%');
+}*/
+                //$dataz=$this->charts_all_data(Disease::with("facility")->whereHas('facility', function($q) use($subcounty) { $q->where('subcounty_id', '=', $subcounty); })->get());
+ $dataz=$this->charts_all_data(Disease::whereHas('facility', function (Builder $query) use($subcounty) {
+$query->where('subcounty_id', '=', "$subcounty");
+})->get());
+              dd($dataz);
             }
           else{
 
@@ -101,6 +109,7 @@ class HomeController extends Controller
 
     private static function charts_all_data($alerts){
       //$alerts = Disease::get();
+    //  $Total_disease[$count]=$alertz->alerts->count();
       $Positive=$Total_disease=$diseasez=$Negative=$Undetermined=$Not_done= array();
       //dd($alerts);
       $count=0;
@@ -146,7 +155,7 @@ class HomeController extends Controller
 
       $count++;
       }
-      return compact("alerts","Total_disease","diseasez","Positive","Negative","Undetermined","Not_done");
+      return compact("Total_disease","diseasez","Positive","Negative","Undetermined","Not_done");
     }
 
   //  private static function charts_all_data_by_county(){
