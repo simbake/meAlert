@@ -11,6 +11,7 @@ use App\Models\Facility;
 use App\Models\Disease;
 use App\Models\Kemriresponse;
 use Illuminate\Database\Eloquent\Builder;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -21,7 +22,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth',["except"=>['index','getalerts']]);
+        $this->middleware('auth',["except"=>['index','getalerts','getAlertsStats','getactivity_alerts_view']]);
     }
 
     /**
@@ -82,7 +83,7 @@ $n->where('subcounty_id', $subcounty);
        if(Auth::user()->access_level == "MOH" || Auth::user()->access_level == "KEMRI"){
          $alerts = DB::table('alerts')->join('facilities','alerts.facility_id','=','facilities.id')
                  ->select(DB::raw('facilities.facility_name,facilities.latitude,facilities.longitude,alerts.facility_id,count(alerts.id) as Total'))
-                 ->groupBy('alerts.facility_id','facilities.id')
+                 ->groupBy('alerts.facility_id','facilities.id','facilities.facility_name','facilities.latitude','facilities.longitude')
                  ->get();
        }
        elseif(Auth::user()->access_level == "County Administrator"){
@@ -91,7 +92,7 @@ $n->where('subcounty_id', $subcounty);
          $alerts = DB::table('alerts')->join('facilities','alerts.facility_id','=','facilities.id')
                  ->select(DB::raw('facilities.facility_name,facilities.latitude,facilities.longitude,alerts.facility_id,count(alerts.id) as Total'))
                  ->where('facilities.county_id', '=', Auth::user()->county_id)
-                 ->groupBy('alerts.facility_id','facilities.id')
+                 ->groupBy('alerts.facility_id','facilities.id','facilities.facility_name','facilities.latitude','facilities.longitude')
                  ->get();
        }
        elseif(Auth::user()->access_level == "Sub-County Administrator"){
@@ -99,7 +100,7 @@ $n->where('subcounty_id', $subcounty);
          $alerts = DB::table('alerts')->join('facilities','alerts.facility_id','=','facilities.id')
                  ->select(DB::raw('facilities.facility_name,facilities.latitude,facilities.longitude,alerts.facility_id,count(alerts.id) as Total'))
                  ->where('facilities.subcounty_id', '=', Auth::user()->subcounty_id)
-                 ->groupBy('alerts.facility_id','facilities.id')
+                 ->groupBy('alerts.facility_id','facilities.id','facilities.facility_name','facilities.latitude','facilities.longitude')
                  ->get();
 
        }
@@ -107,7 +108,7 @@ $n->where('subcounty_id', $subcounty);
       //$alerts = Alert::with("facility")->distinct()->get(['facility_id']);
       $alerts = DB::table('alerts')->join('facilities','alerts.facility_id','=','facilities.id')
               ->select(DB::raw('facilities.facility_name,facilities.latitude,facilities.longitude,alerts.facility_id,count(alerts.id) as Total'))
-              ->groupBy('alerts.facility_id','facilities.id')
+              ->groupBy('alerts.facility_id','facilities.id','facilities.facility_name','facilities.latitude','facilities.longitude')
               ->get();
       }
       return $alerts;
@@ -161,13 +162,51 @@ $n->where('subcounty_id', $subcounty);
       dd("this");
       }
     }
-
+      $unconfirmed[$count]=$Total_disease[$count]-($Positive[$count]+$Negative[$count]+$Undetermined[$count]+$Not_done[$count]);
       $count++;
       }
-      return compact("Total_disease","diseasez","Positive","Negative","Undetermined","Not_done");
+      return compact("unconfirmed","diseasez","Positive","Negative","Undetermined","Not_done");
     }
 
   //  private static function charts_all_data_by_county(){
+
+  public function getAlertsStats(){
+//  if(Auth::check()):
+    if(Auth::check() && Auth::user()->access_level == "County Administrator"):
+          $county = Auth::user()->county_id;
+      $data=Disease::select('disease_name')->withCount(['alerts' => function($q) use ($county) {
+      $q->whereHas('facility', function (Builder $n) use($county) {
+      $n->where('county_id', $county);
+      });
+      }])->orderByDesc('alerts_count')->take(5)->get();
+
+    elseif(Auth::check() && Auth::user()->access_level == "Sub-County Administrator"):
+
+      $subcounty = Auth::user()->subcounty_id;
+  $data=Disease::select('disease_name')->withCount(['alerts' => function($q) use ($subcounty) {
+  $q->whereHas('facility', function (Builder $n) use($subcounty) {
+  $n->where('subcounty_id', $subcounty);
+  });
+  }])->orderByDesc('alerts_count')->take(5)->get();
+
+    else:
+      $data=Disease::select('disease_name')->withCount('alerts')->orderByDesc('alerts_count')->take(5)->get();
+    endif;
+/*  else:
+    $data=Disease::select('disease_name')->withCount('alerts')->orderByDesc('alerts_count')->get("disease_name");
+  endif;*/
+    return $data;
+  }
+
+  public function getactivity_alerts_view(){
+    $alerts=Alert::select("id","disease_id","user_id","created_at")->with(['disease' => function($q) {
+    $q->select("id","disease_name");
+  }])->with(['user' => function($q) {
+    $q->select("id","username");
+  }])->latest()->take(5)->get()->toArray();
+
+    return $alerts;
+  }
 
 
 

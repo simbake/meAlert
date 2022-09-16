@@ -49,6 +49,9 @@ Route::post('/county/store','CountyController@store');
 Route::post('/subcounty/store','SubcountyController@store');
 Route::post('/response/store/{response}','ResponseController@store');
 Route::post('/kemri/store/{alert}','ResponseController@kemri_response_store');
+Route::get('/right_alerts', 'HomeController@getAlertsStats');
+Route::get('/activity_alerts_view', 'HomeController@getactivity_alerts_view');
+
 
 Auth::routes();
 

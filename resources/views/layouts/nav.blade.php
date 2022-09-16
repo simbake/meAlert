@@ -1,11 +1,11 @@
-<header class="blog-header py-3">
+<header class="blog-header py-3 sticky-top">
   <div class="row flex-nowrap justify-content-between align-items-center">
     <div class="col-4 pt-1">
       <a class="text-muted" href="#">Subscribe</a>
     </div>
     <div class="col-4 text-center">
-      <img src="{{route('index')}}/css/svg/device-mobile.svg" class="img-rounded img-responsive " alt="Responsive image" id="logo" >
-      <a class="blog-header-logo text-dark" href="{{url('/')}}">meAlert</a>
+
+      <a class="blog-header-logo text-dark" href="{{url('/')}}"><img src="{{route('index')}}/css/svg/device-mobile.svg" class="img-rounded img-responsive " alt="Responsive image" id="logo" > meAlert</a>
     </div>
     <div class="col-4 d-flex justify-content-end align-items-center">
       <!--<a class="text-muted" href="#">

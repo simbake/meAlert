@@ -74,6 +74,7 @@
     <script src="{{route('index')}}/datatables/datatables.min.js"></script>
     <script src="{{route('index')}}/js/notify.min.js"></script>
     @yield('js')
+    @yield('right_sidejs')
     <script>
     $(document).ready( function () {
       if("{{session('success')}}"){

@@ -67,7 +67,7 @@ height: 100%;
 @endsection
 
 @section('js')
-<script src="https://maps.google.com/maps/api/js?key=AIzaSyCLFGxuQi15Sfc3EHJ0qq0uK6FhGED-bwI"></script>
+<script src="https://maps.google.com/maps/api/js?key=AIzaSyC8aYtYtDU-hHHL2Td_ksld2gYlRelzhBs"></script>
 <script src="js/gmaps.js"></script>
 <script src="highcharts/highcharts.js"></script>
 <script src="highcharts/exporting.js"></script>
@@ -163,8 +163,8 @@ function load_chart(){
     series: [
       {
         <?php //dd($Positive); ?>
-        data:[{!!implode(",",$Total_disease)!!}],
-        name:"Total Alerts"
+        data:[{!!implode(",",$unconfirmed)!!}],
+        name:"Unconfirmed"
       },
       {
       <?php //dd($Positive); ?>
