@@ -5,7 +5,7 @@
     </div>
     <div class="col-4 text-center">
 
-      <a class="blog-header-logo text-dark" href="{{url('/')}}"><img src="{{route('index')}}/css/svg/device-mobile.svg" class="img-rounded img-responsive " alt="Responsive image" id="logo" > meAlert</a>
+      <a class="blog-header-logo text-dark" href="{{url('/')}}"><img src="{{route('index')}}/css/svg/device-mobile.svg" class="img-rounded img-responsive " alt="Responsive image" id="logo" > meAlert</a><span class="beta">BETA</span>
     </div>
     <div class="col-4 d-flex justify-content-end align-items-center">
       <!--<a class="text-muted" href="#">
