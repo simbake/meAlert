@@ -20,7 +20,8 @@
     <link href="{{route('index')}}/css/jquery.dataTables.min.css" rel="stylesheet">
   </head>
 
-  <body>
+  <body class="d-flex flex-column justify-content-between bg-light">
+    <div >
     <div class="container-fluid">
     @include('layouts.nav')
     </div>
@@ -57,11 +58,9 @@
     </div>
   </div>
   </div>
-
-
-<br/>
+</div>
+</div>
 @include('layouts.footer')
-
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

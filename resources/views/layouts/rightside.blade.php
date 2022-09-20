@@ -21,14 +21,14 @@
     </ol>
   </div>
 
-  <div class="p-3">
+  <!--<div class="p-3">
     <h4 class="font-italic">Elsewhere</h4>
     <ol class="list-unstyled">
       <li><a href="#">GitHub</a></li>
       <li><a href="#">Twitter</a></li>
       <li><a href="#">Facebook</a></li>
     </ol>
-  </div>
+  </div>-->
 </aside>
 @section('right_sidejs')
 <script src="js/moment.js"></script>
@@ -69,7 +69,7 @@ function load_alerts_avtivity(){
      for (var key in result) {
       //  if (json.hasOwnProperty(key)) {
             $("#activity_list").append("<li class='list-group-item'><span class='float-md-left'>"+json[key]["disease"]['disease_name']+
-            "</span><span class='badge badge-info badge-pill float-md-right'><img src='{{route('index')}}/css/svg/clock.svg' class='img-rounded img-responsive ' alt='Responsive image' id='logo' > "+moment(json[key]['created_at']).fromNow()+"</span><br/><span class='float-md-right'><img src='{{route('index')}}/css/svg/octoface.svg' class='img-rounded img-responsive ' alt='Responsive image' id='logo' > "+json[key]["user"]['username']+"</span><br/></li>").fadeIn(500);
+            "</span><span class='badge badge-light badge-pill float-md-right'><img src='{{route('index')}}/css/svg/clock.svg' class='img-rounded img-responsive ' alt='Responsive image' id='logo' > "+moment(json[key]['created_at']).fromNow()+"</span><br/><span class='float-md-right'><img src='{{route('index')}}/css/svg/octoface.svg' class='img-rounded img-responsive ' alt='Responsive image' id='logo' > "+json[key]["user"]['username']+"</span><br/></li>").fadeIn(500);
             //console.log(key + " -> " + json[key]['facility']['facility_name']);
       //  }
     }

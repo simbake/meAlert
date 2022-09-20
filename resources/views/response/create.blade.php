@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-
+<div class="container">
 <h1>Create an alert</h1>
 <hr>
 <form method="POST" action="{{route('index')}}/response/store/{{ $alert->id }}">
@@ -68,6 +68,7 @@
 
   <button type="submit" class="btn btn-primary">Create Response</button>
 </form>
+</div>
 @include('layouts.errors')
 @endsection
 

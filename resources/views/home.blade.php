@@ -17,13 +17,11 @@ width: 100%;
 height: 100%;
 }
   </style>
-<div class="container">
+  <div class="row">
+<div class="col-md-6">
     <div class="row">
-        <div class="col-md-12">
-          <div class="row">
-          <div class="col-md-2"></div>
-
-           <div class="col-md-10">
+        <!--<div class="col-md-12">-->
+           <div class="col-md-12">
             <div class="card">
                 <div class="card-header">Map</div>
 
@@ -33,20 +31,20 @@ height: 100%;
                             {{ session('status') }}
                         </div>
                     @endif
-                   <div class="iframe-rwd">
-                    <div id="map"></div>
+                   <div class="Flexible-container">
+                    <div class="map" id="map"></div>
                   </div>
                 </div>
-            </div><hr></hr>
-          </div></div>
-        </div>
+            </div>
+          </div>
+        <!--</div>-->
     </div>
 </div>
-<div class="container"></div>
-<div class="container">
+
+<div class="col-md-6">
     <div class="row justify-content-center">
-      <div class="col-md-2"></div>
-        <div class="col-md-10">
+
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">Chart</div>
 
@@ -57,12 +55,13 @@ height: 100%;
                         </div>
                     @endif
                    <div class="">
-                    <div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+                    <div id="container" style="max-width: 100%; height:500px;"></div>
                   </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 @endsection
 
@@ -72,26 +71,21 @@ height: 100%;
 <script src="highcharts/highcharts.js"></script>
 <script src="highcharts/exporting.js"></script>
 <script src="highcharts/export-data.js"></script>
+<script src="js/jquery.mobilegmap.min.js"></script>
 <script>
 $(document).ready(function () {
     var map = new GMaps({
         div: '#map',
-        lat: -2,
-        lng: 38.9062,
-        width: '100%',
-        height: '800px',
+        lat: 0,
+        lng: 35.9062,
+        height: '500px',
         zoom: 6,
-        zoomControl: true,
-        zoomControlOpt: {
-            style: 'SMALL',
-            position: 'TOP_LEFT'
-        },
-        panControl: false
     });
+    //var center = map.getCenter(map.getBounds());
     load_mapmarkers(map);
     load_chart();
-});
 
+});
 function load_mapmarkers(map){
   /*$.ajax({url: "/home_alerts", success: function(result){
           alert(result);
@@ -127,7 +121,7 @@ function load_mapmarkers(map){
 function load_chart(){
   Highcharts.chart('container', {
     chart: {
-        type: 'column'
+        type: 'bar'
     },
     title: {
         text: 'lifetime Alert Analysis'

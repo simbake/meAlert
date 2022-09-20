@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-
+<div class="container">
 <h1>Add a SubCounty</h1>
 <hr>
 <form method="POST" action="{{route('index')}}/subcounty/store">
@@ -23,5 +23,6 @@
   </div>
   <button type="submit" class="btn btn-primary">Add County</button>
 </form>
+</div>
 @include('layouts.errors')
 @endsection

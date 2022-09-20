@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-
+<div class="container">
 <h1>Add a Facility</h1>
 <hr>
 <form method="POST" action="{{route('index')}}/facility/store">
@@ -40,5 +40,6 @@
   </div>
   <button type="submit" class="btn btn-primary">Add Facility</button>
 </form>
+</div>
 @include('layouts.errors')
 @endsection

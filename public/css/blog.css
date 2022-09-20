@@ -116,7 +116,13 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 1.25rem;
   color: #999;
 }
-
+html, body {
+  height: 100%;
+}
+.wrapper{
+    display: grid;
+    grid-template-rows: auto auto auto;
+}
 /*
  * Footer
  */
@@ -125,14 +131,27 @@ h1, h2, h3, h4, h5, h6 {
   color: #999;
   text-align: center;
   background-color: #f9f9f9;
-  border-top: .05rem solid #e5e5e5;
-}
-.blog-footer p:last-child {
-  margin-bottom: 0;
+
 }
 .beta
   {
    content: 'BETA';
    font-size: 12px;
    vertical-align: top;
+}
+
+/* Flexible iFrame */
+
+.Flexible-container {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+}
+.map iframe,
+.map div,{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
