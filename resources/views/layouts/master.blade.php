@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
+    <link rel="icon" href="{{route('index')}}/css/svg/device-mobile.svg">
 
     <title>meALERT</title>
 
@@ -18,9 +18,10 @@
     <link href="{{route('index')}}/css/octicons.css" rel="stylesheet">
     <link href="{{route('index')}}/datatables/datatables.min.css" rel="stylesheet">
     <link href="{{route('index')}}/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.6.95/css/materialdesignicons.css" rel="stylesheet">
   </head>
 
-  <body class="d-flex flex-column justify-content-between bg-light">
+  <body class="d-xl-flex flex-column justify-content-between bg-light">
     <div >
     <div class="container-fluid">
     @include('layouts.nav')
@@ -32,13 +33,13 @@
     </div>
     <div class="row container-fluid">
       @if(Route::current()->getName() == 'home' || Route::current()->getName() == 'index')
-      <div class="col-md-10">
+      <div class="col-xl-10">
         @else
-        <div class="col-md-12">
+        <div class="col-xl-12">
         @endif
     <main role="main" class="">
       <div class="row">
-        <div class="col-md-12 blog-main">
+        <div class="col-xl-12 blog-main">
         @yield('content')<!-- /.blog-main -->
       </div>
       <?php //dd($show_right) ?>
@@ -48,14 +49,14 @@
 
     </main><!-- /.container -->
   </div>
-  <div class="col-md-2">
-    <div class="row" style="">
-      <div class="col-md-12">
+  <div class="col-xl-2">
+
+
     @if(Route::current()->getName() == 'home' || Route::current()->getName() == 'index')
       @Include('layouts.rightside')
     @endif
-    </div>
-    </div>
+
+
   </div>
   </div>
 </div>

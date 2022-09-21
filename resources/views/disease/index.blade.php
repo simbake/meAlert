@@ -26,7 +26,7 @@
     <td>{{ $disease->disease_name }}</td>
     <td>
       <center>
-      <button type="button" name="{{ $disease->disease_name }}"  data-case="Case Definition" id="case_definition" class="badge badge-primary button_this" data-toggle="modal"  data-whatever="{!! $disease->case_definition !!}">Case Definition</button>
+      <button type="button" name="{{ $disease->disease_name }}"  data-case="Case Definition" id="case_definition" class="btn btn-outline-secondary btn-sm button_this" data-toggle="modal"  data-whatever="{!! $disease->case_definition !!}">Case Definition</button>
     </center>
       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -49,7 +49,7 @@
 </td>
     <td>
       <center>
-     <button type="button" name="{{ $disease->disease_name }}" data-case="Lab sample handling" id="lab_sample" class="badge badge-primary button_this" data-toggle="modal" data-target="#exampleModal" data-whatever="{!! $disease->lab_sample_handling !!}">Lab Sample Handling</button>
+     <button type="button" name="{{ $disease->disease_name }}" data-case="Lab sample handling" id="lab_sample" class="btn btn-outline-secondary btn-sm button_this" data-toggle="modal" data-target="#exampleModal" data-whatever="{!! $disease->lab_sample_handling !!}">Lab Sample Handling</button>
    </center>
     </td>
   </tr>

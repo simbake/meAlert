@@ -1,4 +1,4 @@
-<aside class="col-md-12 blog-sidebar">
+<aside class="">
   <div class="p-3 mb-3 bg-light rounded">
     <h4 class="font-italic">Alerts</h4>
     <!--<p class="mb-0">Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>-->
@@ -8,17 +8,14 @@
       <ul>
   </div>
 
-  <div class="p-3 bg-light rounded">
-    <h4 class="font-italic">Activity Feed</h4>
-    <ol class="list-unstyled mb-0 list-group-flush">
-      <div id="activity_list"></div>
-      {{ $articles=null }}
-      @if($articles != null):
-      @foreach($archives as $stats)
-      <li><a href="/?month={{ $stats['month'] }}&year={{$stats['year']}}">{{ $stats['month'].' '.$stats['year']}}</a></li>
-      @endforeach
-      @endif
-    </ol>
+  <div class="p-3 mb-0 bg-light rounded">
+    <h4 class="font-italic">Activity</h4>
+    <!--<p class="mb-0">Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>-->
+
+    <div class="col-inside-xl decor-default activities rounded" id="activity_list">
+
+    </div>
+
   </div>
 
   <!--<div class="p-3">
@@ -32,6 +29,7 @@
 </aside>
 @section('right_sidejs')
 <script src="js/moment.js"></script>
+
 <script>
 $(document).ready(function () {
 loadAlertsList();
@@ -49,7 +47,8 @@ success: function(result){
    var results = "";
      for (var key in result) {
       //  if (json.hasOwnProperty(key)) {
-            $("#alerts_list").append("<li class='list-group-item d-flex justify-content-between align-items-center'>"+json[key]['disease_name']+"   <span class='badge badge-primary badge-pill'>"+json[key]['alerts_count']+"</span></li>").fadeIn(500);;
+            $("#alerts_list").append("<li class='list-group-item d-flex justify-content-between align-items-center'>"+json[key]['disease_name']+
+            "<span class='badge badge-primary badge-pill'>"+json[key]['alerts_count']+"</span></li>").fadeIn(500);;
             //console.log(key + " -> " + json[key]['facility']['facility_name']);
       //  }
     }
@@ -67,10 +66,13 @@ function load_alerts_avtivity(){
    var json = result;
    var results = "";
      for (var key in result) {
+       $("#activity_list").append("<div class='unit'><a class='avatar' href='#'><img src='{{route('index')}}/css/svg/alert.svg' class='img-responsive' alt='profile'></a><div class='field title'><b>"+
+       json[key]["disease"]['disease_name']+
+       "</b> reported by  <b>"
+       +json[key]["user"]['username']+"</b></div><div class='field date'><span class='f-l'>"+
+       moment(json[key]['created_at']).fromNow()+
+       "</span></div></div>");
       //  if (json.hasOwnProperty(key)) {
-            $("#activity_list").append("<li class='list-group-item'><span class='float-md-left'>"+json[key]["disease"]['disease_name']+
-            "</span><span class='badge badge-light badge-pill float-md-right'><img src='{{route('index')}}/css/svg/clock.svg' class='img-rounded img-responsive ' alt='Responsive image' id='logo' > "+moment(json[key]['created_at']).fromNow()+"</span><br/><span class='float-md-right'><img src='{{route('index')}}/css/svg/octoface.svg' class='img-rounded img-responsive ' alt='Responsive image' id='logo' > "+json[key]["user"]['username']+"</span><br/></li>").fadeIn(500);
-            //console.log(key + " -> " + json[key]['facility']['facility_name']);
       //  }
     }
   }

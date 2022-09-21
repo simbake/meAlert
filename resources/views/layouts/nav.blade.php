@@ -1,7 +1,10 @@
 <header class="blog-header py-3">
   <div class="row ">
     <div class="col-md-4 pt-1">
-      <a class="text-muted" href="#">Subscribe</a>
+      @auth
+      <p class="text-muted">{{ Auth::user()->access_level }}</p>
+      @endauth
+      <!--<a class="text-muted" href="#">Subscribe</a>-->
     </div>
     <div class="col-md-4 text-center">
 
@@ -17,8 +20,12 @@
           <!--<a class="btn btn-sm btn-outline-secondary" href="{{ url('/register_userz') }}">Sign up</a>--><a class="btn btn-sm btn-outline-secondary" href="{{ route('login') }}">Sign in</a>
             @else
               <div class="nav-item dropdown">
-                  <a id="navbarDropdown" class="btn btn-link nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ Auth::user()->username }} | @if(Auth::user()->county_id !=0) {{ Auth::user()->county->name }} @elseif(Auth::user()->subcounty_id !=0) {{ Auth::user()->subcounty->name }}  @endif{{ Auth::user()->access_level }} <span class="caret"></span>
+                  <a id="navbarDropdown" class="btn btn-sm btn-outline-primary nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {{ Auth::user()->username }} | @if(Auth::user()->access_level == "MOH" || Auth::user()->access_level == "KEMRI") {{Auth::user()->access_level}} @endif
+                      @if(Auth::user()->county_id !=0)
+                      {{ Auth::user()->county->name }}
+                      @elseif(Auth::user()->subcounty_id !=0) {{ Auth::user()->subcounty->name }}
+                      @endif<span class="caret"></span>
                   </a>
 
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -52,37 +59,44 @@
   @auth
 
 <div class="row" >
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="collapse navbar-collapse float-right" id="navbarTogglerDemo01">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0 float-right">
-      <li class="nav-item">
-        <a class="p-2 text-muted" href="{{url('/alerts')}}">Alerts</a>
-      </li>
-      <li class="nav-item">
-        <a class="p-2 text-muted" href="{{route('index')}}/facilities">Facilities</a>
-      </li>
-      <li class="nav-item">
-        <a class="p-2 text-muted" href="{{route('index')}}/diseases">Diseases</a>
-      </li>
-      <li class="nav-item">
-        <a class="p-2 text-muted" href="{{route('index')}}/counties">Counties</a>
-      </li>
-      <li class="nav-item">
-        <a class="p-2 text-muted" href="{{route('index')}}/subcounties">Sub-Counties</a>
-      </li>
-      <li class="nav-item">
-        <a class="p-2 text-muted" href="{{route('index')}}/responses">Responses</a>
-      </li>
+  <div class="col-md-12">
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+
+  <span class="ml-md-auto">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <div class="navbar-nav">
+
+        <a class="nav-item nav-link" href="{{url('/alerts')}}">Alerts</a>
+
+
+        <a class="nav-item nav-link" href="{{route('index')}}/facilities">Facilities</a>
+
+
+        <a class="nav-item nav-link" href="{{route('index')}}/diseases">Diseases</a>
+
+
+        <a class="nav-item nav-link" href="{{route('index')}}/counties">Counties</a>
+
+
+        <a class="nav-item nav-link" href="{{route('index')}}/subcounties">Sub-Counties</a>
+
+
+        <a class="nav-item nav-link" href="{{route('index')}}/responses">Responses</a>
+
       @if(Auth::user()->access_level == "MOH")
-      <li class="nav-item">
-        <a class="p-2 text-muted" href="{{route('index')}}/users">Users</a>
-      </li>
+
+        <a class="nav-item nav-link" href="{{route('index')}}/users">Users</a>
+
       @endif
-    </ul>
+    </div>
   </div>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+</span>
 </nav>
 </div>
+</div>
+@else
+<br/>
 @endauth

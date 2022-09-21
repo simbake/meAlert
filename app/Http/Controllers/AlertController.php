@@ -115,6 +115,6 @@ class AlertController extends Controller
     // $alerts = Alert::latest()->get();
      //Excel::loadView('alert.index', compact("alerts"))->export('xls');
      //return (new AlertsExport)->View();
-     return (new AlertsExport)->download('alerts.xlsx');
+     return (new AlertsExport)->download('alerts_'.Carbon::now().'.xlsx');
     }
 }

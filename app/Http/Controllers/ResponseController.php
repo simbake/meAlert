@@ -192,6 +192,6 @@ class ResponseController extends Controller
     // $alerts = Alert::latest()->get();
      //Excel::loadView('alert.index', compact("alerts"))->export('xls');
      //return (new AlertsExport)->View();
-     return (new ResponsesExport)->download('responses.xlsx');
+     return (new ResponsesExport)->download('responses_'.Carbon::now().'.xlsx');
     }
 }

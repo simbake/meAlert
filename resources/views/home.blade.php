@@ -1,27 +1,11 @@
 @extends('layouts.master')
 
 @section('content')
-<style type="text/css">
-.iframe-rwd  {
-position: relative;
-padding-bottom: 65.25%;
-padding-top: 0px;
-height: 0;
-overflow: hidden;
-}
-.iframe-rwd iframe {
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-}
-  </style>
   <div class="row">
-<div class="col-md-6">
+<div class="col-xl-6">
     <div class="row">
         <!--<div class="col-md-12">-->
-           <div class="col-md-12">
+           <div class="col-xl-12">
             <div class="card">
                 <div class="card-header">Map</div>
 
@@ -32,7 +16,8 @@ height: 100%;
                         </div>
                     @endif
                    <div class="Flexible-container">
-                    <div class="map" id="map"></div>
+                    <div class="map embed-responsive-item" id="map"></div>
+
                   </div>
                 </div>
             </div>
@@ -41,10 +26,10 @@ height: 100%;
     </div>
 </div>
 
-<div class="col-md-6">
+<div class="col-xl-6">
     <div class="row justify-content-center">
 
-        <div class="col-md-12">
+        <div class="col-xl-12">
             <div class="card">
                 <div class="card-header">Chart</div>
 
@@ -71,7 +56,6 @@ height: 100%;
 <script src="highcharts/highcharts.js"></script>
 <script src="highcharts/exporting.js"></script>
 <script src="highcharts/export-data.js"></script>
-<script src="js/jquery.mobilegmap.min.js"></script>
 <script>
 $(document).ready(function () {
     var map = new GMaps({
@@ -81,15 +65,11 @@ $(document).ready(function () {
         height: '500px',
         zoom: 6,
     });
-    //var center = map.getCenter(map.getBounds());
     load_mapmarkers(map);
     load_chart();
 
 });
 function load_mapmarkers(map){
-  /*$.ajax({url: "/home_alerts", success: function(result){
-          alert(result);
-      }});*/
       $.ajax({
   type: 'GET',
   url: "{{url('/home_alerts')}}",
@@ -111,7 +91,7 @@ function load_mapmarkers(map){
       "<b><strong>Alerts Reported:</strong></b> "+json[key]["Total"]+"<br/><a href='{{url('/facility_alerts')}}/"+json[key]['facility_id']+"'>View alerts</a>"
     }
            });
-                //console.log(key + " -> " + json[key]['facility']['facility_name']);
+
             }
         }
       }
@@ -156,12 +136,12 @@ function load_chart(){
     },
     series: [
       {
-        <?php //dd($Positive); ?>
+
         data:[{!!implode(",",$unconfirmed)!!}],
         name:"Unconfirmed"
       },
       {
-      <?php //dd($Positive); ?>
+
       data:[{!!implode(",",$Positive)!!}],
       name:"Positive"
     },{
