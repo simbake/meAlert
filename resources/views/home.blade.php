@@ -51,7 +51,7 @@
 @endsection
 
 @section('js')
-<script src="https://maps.google.com/maps/api/js?key=AIzaSyC8aYtYtDU-hHHL2Td_ksld2gYlRelzhBs"></script>
+<script src="https://maps.google.com/maps/api/js?key="></script>
 <script src="js/gmaps.js"></script>
 <script src="highcharts/highcharts.js"></script>
 <script src="highcharts/exporting.js"></script>
